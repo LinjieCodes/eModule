@@ -76,7 +76,7 @@ Parameters       Functions
 ```
 
 
-#3. Identification of differentially expressed enhancers
+#Identification of differentially expressed enhancers
 
 ## Data
 1. **Spleen_RPM.csv**  --  the enhancer expression matrix.
