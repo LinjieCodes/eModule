@@ -22,7 +22,7 @@ The eNet program comprises four distinct scripts, each serving a specific purpos
 9. **OS**: the eNet code has been tested on Linux system.
 
 
-#1. Calculate expression of enhancer
+# 1. Calculate expression of enhancer
 
 ## Data
 1. **Ensembl_Fantom5_enhancers_nonOverlapGene**  --  the annotation file of all enhancers.
@@ -48,7 +48,7 @@ Parameters       Functions
 ```
 
 
-#2. Normalization of enhancer expression
+# 2. Normalization of enhancer expression
 
 ## Data
 1. **Ensembl_Fantom5_enhancers_nonOverlapGene**  --  the annotation file of all enhancers.
@@ -76,7 +76,7 @@ Parameters       Functions
 ```
 
 
-#Identification of differentially expressed enhancers
+# 3.Identification of differentially expressed enhancers
 
 ## Data
 1. **Spleen_RPM.csv**  --  the enhancer expression matrix.
