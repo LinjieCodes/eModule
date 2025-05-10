@@ -42,7 +42,7 @@ Here is a brief explanation of the command line arguments:
 
 ```
 Parameters       Functions
---annoFile       enhancer_annotation_file. 
+--annoFile       to specify enhancer_annotation_file. 
 --bwfile         bigwig file. This file can be downloaded from the Recount3 platform. 
 --outFile        the file to write result.
 ```
@@ -69,19 +69,19 @@ Here is a brief explanation of the command line arguments:
 
 ```
 Parameters       Functions
---annoFile       enhancer_annotation_file. 
---sampleFile     sample_attribute_file. 
---expFolder      Path of enhancers' raw expression.
---outFolder      Output path to write enhancers' normalized expression.
+--annoFile       to specify enhancer annotation file. 
+--sampleFile     to specify sample attribute file. 
+--expFolder      the folder of enhancers' raw expression.
+--outFolder      to specify the utput folder to write enhancers' normalized expression.
 ```
 
 
 # 3.Identification of differentially expressed enhancers
 
 ## Data
-1. **Spleen_RPM.csv**  --  the enhancer expression matrix.
+1. **Spleen_RPM.csv**  --  enhancer expression matrix.
 
-2. **Spleen_sample.csv**  --  sample_attribute_file of a tissue. This file can be downloaded from the Recount3 platform.
+2. **Spleen_sample.csv**  --  sample attribute. This file can be downloaded from the Recount3 platform.
 
 ## Usage
 A command line to run the diffExp.py script:
@@ -95,10 +95,50 @@ A brief explanation of the command line arguments:
 
 ```
 Parameters      Functions
---expFile       enhancer RPM matrix. 
---sampleFile    sample_attribute_file of the tissue. 
+--expFile       to specify enhancer RPM matrix. 
+--sampleFile    to specify sample_attribute_file. 
 --tissue        the tissue label.
 --outFile       the file to write result.
+```
+
+
+# 4.Inference of enhancer-mediated gene regulation modules
+
+## Data
+1. **Spleen_RPM.csv**  --  enhancer expression matrix.
+
+2. **Spleen_geneExp.csv**  --  gene expression matrix.
+
+3. **Enhancer_TFBS_demo**  --  Enhancers' binding TFs. This is a demo showing the file format. The complete file is too large to upload, which can be obtained through the JASPAR website.
+
+4. **Promoter_TFBS_demo**  --  Genes' binding TFs. This is a demo to showing the file format. The complete file is too large to upload, which can be obtained through the JASPAR website.
+
+5. **SpleenSexBiasedEnhancer**  --  List of enhancers you are interested.
+
+6.  **Homo_sapiens.GRCh38.101.gtf**  -- The gtf file can be downloaded from the Ensembl website. This file is too large to upload.
+
+## Usage
+A command line to run the identifyModule.py script:
+
+```
+'Example: python identifyModule.py  --eExpCsv Spleen_RPM.csv  --gExpCsv Spleen_geneExp.csv --eTFBS_file Enhancer_TFBS_demo --gTFBS_file Promoter_TFBS_demo --eFile SpleenSexBiasedEnhancer --gtfFile Homo_sapiens.GRCh38.101.gtf --tfcutoff 400 --rcutoff 0.3 --pcutoff 0.05 --outFile module_out'
+```
+
+## Help information
+A brief explanation of the command line arguments:
+
+```
+Parameters      Functions
+--eExpCsv       to specify enhancer expression matrix. 
+--gExpCsv       to specify gene expression matrix. 
+--eTFBS_file    to specify the file of enhancer-TF binding pairs.
+--gTFBS_file    to specify the file of gene-TF binding pairs.
+--eFile         list of enhancers to be analyzed.
+--gtfFile       the gtf file.
+--tfcutoff      the score cutoff to determine potential enhancer-TF/gene-TF bindings.
+--rcutoff       correlation coefficient cutoff for Spearman correlation test.
+--pcutoff		p-value cutoff for Spearman correlation test.
+--outFile		to specify the output file.
 ```
 
 # Bug reports
