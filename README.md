@@ -1,6 +1,6 @@
 # A computational framework (eModule) for enhancer analysis with transcritomic data
 
-The eNet program comprises four scripts, each serving a specific purpose. These purposes are as follows: firstly, to quantify enhancer expression levels; secondly, to conduct enhancer expression normalization; thirdly, to identify differentially expressed enhancers; and lastly, to infer enhancer-mediated gene regulation modules. Collectively, these scripts enable the program to analyze enhancer-related gene regulation with transcritomic data.
+The program comprises four scripts, each serving a specific purpose. These purposes are as follows: firstly, to quantify enhancer expression levels; secondly, to conduct enhancer expression normalization; thirdly, to identify differentially expressed enhancers; and lastly, to infer enhancer-mediated gene regulation modules. Collectively, these scripts enable the program to analyze enhancer-related gene regulation with transcritomic data.
 
 # Requirements
 1. **Python**: >=3.7.0
@@ -19,7 +19,7 @@ The eNet program comprises four scripts, each serving a specific purpose. These 
 
 8. **pyBigWig**: >=0.3.22
 
-9. **OS**: the eNet code has been tested on Linux system.
+9. **OS**: the code has been tested on Linux system.
 
 
 # 1. Calculate expression of enhancer
