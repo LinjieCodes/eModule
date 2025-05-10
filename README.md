@@ -137,8 +137,8 @@ Parameters      Functions
 --gtfFile       the gtf file.
 --tfcutoff      the score cutoff to determine potential enhancer-TF/gene-TF bindings.
 --rcutoff       correlation coefficient cutoff for Spearman correlation test.
---pcutoff		p-value cutoff for Spearman correlation test.
---outFile		to specify the output file.
+--pcutoff       p-value cutoff for Spearman correlation test.
+--outFile       to specify the output file.
 ```
 
 # Bug reports
