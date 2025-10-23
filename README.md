@@ -164,20 +164,20 @@ python eNormalization.py \
     --annoFile Ensembl_Fantom5_enhancers_nonOverlapGene \
     --sampleFile sampleAttributes \
     --expFolder eRNA_perbase_average/ \
-    --outFolder eRNA_RPM/
+    --outFolder eRNA_CPM/
 ```
 
 **Parameters**:
 - `--annoFile`: Enhancer annotation file
 - `--sampleFile`: Sample attribute file
-- `--expFolder`: Directory containing raw expression files
+- `--expFolder`: Path to folder containing tissue subfolders with expression files
 - `--outFolder`: Output directory for normalized matrices
 
 #### Step 3: Identify Differentially Expressed Enhancers
 
 ```bash
 python diffExp.py \
-    --expFile Spleen_RPM.csv \
+    --expFile Spleen_CPM.csv \
     --sampleFile Spleen_sample.csv \
     --tissue Spleen \
     --outFile sexBiasedEnhancer
@@ -193,7 +193,7 @@ python diffExp.py \
 
 ```bash
 python identifyModule.py \
-    --eExpCsv Spleen_RPM.csv \
+    --eExpCsv Spleen_CPM.csv \
     --gExpCsv Spleen_geneExp.csv \
     --eTFBS_file Enhancer_TFBS_demo \
     --gTFBS_file Promoter_TFBS_demo \
@@ -367,3 +367,4 @@ For questions, bug reports, or collaboration inquiries:
 - **FANTOM and ENCODE** projects for enhancer annotations
 - **JASPAR** database for TF binding profiles
 - **edgeR developers** for robust normalization methods
+- **pyBigWig developers** for a python extension for quick access to bigBed files
