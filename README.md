@@ -163,7 +163,7 @@ python calculateExp.py \
 python eNormalization.py \
     --annoFile Ensembl_Fantom5_enhancers_nonOverlapGene \
     --sampleFile sampleAttributes \
-    --expFolder eRNA_perbase_average/ \
+    --expFolder eRNA_rawExp/ \
     --outFolder eRNA_CPM/
 ```
 
