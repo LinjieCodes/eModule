@@ -188,7 +188,7 @@ python diffExp.py \
 - `--expFile`: Normalized expression matrix (CSV)
 - `--sampleFile`: Sample attributes with covariates
 - `--tissue`: Tissue name for output
-- `--covarFile`: Formula for GLM fitting
+- `--covarFile`: Formula composed of all available covariates for GLM fitting
 - `--outFile`: Output file for results
 
 #### Step 4: Identify Regulatory Modules
