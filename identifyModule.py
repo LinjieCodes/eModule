@@ -22,6 +22,7 @@ import numpy as np
 from scipy import stats
 import pandas as pd
 import re
+import csv
 import sys, getopt
 
 
@@ -425,13 +426,18 @@ def identify_targets(enhancers,
             modules[enhancer][tf] = set()
         modules[enhancer][tf].add(gene)
     
-    # Write regulatory modules to output file    
-    with open(outFile, 'w') as f:
-        f.write('Enhancer\tRegulating TF\tTarget genes\n')
-        for enhancer in modules:
-            for tf in modules[enhancer]:
-                target_str = ', '.join(modules[enhancer][tf])
-                f.write('\t'.join([enhancer, tf, target_str])+'\n')
+    # Write regulatory modules to output file
+    data = [['Enhancer', 'Regulating TF', 'Target genes']]
+    for enhancer in modules:
+        for tf in modules[enhancer]:
+            target = ', '.join(modules[enhancer][tf])
+            data.append([enhancer, tf, target])
+    
+    if '.csv' not in outFile:
+        outFile = outFile + '.csv'
+    with open(outFile, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerows(data)
                 
 
 def usage():

@@ -29,9 +29,10 @@ import sys, getopt
 def diff_exp(expFile,
              sampleFile,
              tissue,
+             covarFile,
              outFile):
     """
-    Perform differential expression analysis to identify sex-biased enhancers.
+    Perform differential expression analysis to identify sex-biased enhancers (or other differentially expressed enhancers).
     
     This function implements a comprehensive statistical pipeline:
     - Controls for sex-correlated gene expression PCs to avoid confounding
@@ -48,12 +49,14 @@ def diff_exp(expFile,
         Path to sample attribute file containing covariates
     tissue : str
         Tissue identifier for output labeling
+    covarFile: str
+        Path to covariate file specifying the formula for GLM 
     outFile : str
         Output file path for results
     
     Statistical Model:
     ------------------
-    Uses Poisson GLM with formula:
+    Take the identification of sex-biased enhancer as an example, uses Poisson GLM with formula:
     expression ~ Sex + Age + GenotypePCs + GeneExpressionPCs + RIN + PMI
     
     Where Sex is coded as 1=male, 2=female
@@ -84,25 +87,34 @@ def diff_exp(expFile,
     individual_attributes = individual_attributes.T
     print(f"Sample attribute matrix shape: {individual_attributes.shape}")
     
+    # Read formula
+    print("Reading formula...")
+    with open(covarFile) as f:
+        formula = f.read().strip()
+    print(f"The formula for GLM: {formula}")
+    
+    # Extract independent variable
+    print("Extracting independent variable...")
+    indepVar = formula[formula.find('~')+1:formula.find('+')]
+    indepVar = indepVar.strip()
+    print(f"The independent variable is: {indepVar}")
+    
     # Identify and exclude gene expression PCs that correlate with sex
     # This prevents removal of sex-associated biological signals
-    print("Identifying sex-correlated expression PCs...")
+    print(f"Identifying {indepVar}-correlated expression PCs...")
     correlatedPCs = set()
     expPCs = [PC for PC in individual_attributes.columns if 'InferredCov' in PC]
     
     for expPC in expPCs:
-        corr, p_value = pointbiserialr(individual_attributes['Sex'], individual_attributes[expPC])
+        corr, p_value = pointbiserialr(individual_attributes[indepVar], individual_attributes[expPC])
         if p_value < 0.05:
             correlatedPCs.add(expPC)
 
-    print(f"Excluding {len(correlatedPCs)} sex-correlated PCs")
+    print(f"Excluding {len(correlatedPCs)} {indepVar}-correlated PCs")
     
     # Remove sex-correlated gene expression PCs to avoid over-correction
     for expPC in correlatedPCs:
         individual_attributes = individual_attributes.drop(expPC, axis = 1)
-    
-    # Construct GLM formula with all available covariates
-    formula = 'expression ~ ' + ' + '.join(individual_attributes.columns)
     
     # Process each enhancer
     print("Fitting GLM models for each enhancer...")
@@ -112,8 +124,8 @@ def diff_exp(expFile,
         enhancer_expression_data.columns  = ['expression']
         
         # Calculate median expression by sex (with pseudocount)
-        male_median = round(float(np.median(np.log2(enhancer_expression_data[individual_attributes['Sex']==1]+0.01))), 3)
-        female_median = round(float(np.median(np.log2(enhancer_expression_data[individual_attributes['Sex']==2]+0.01))), 3)
+        male_median = round(float(np.median(np.log2(enhancer_expression_data[individual_attributes[indepVar]==1]+0.01))), 3)
+        female_median = round(float(np.median(np.log2(enhancer_expression_data[individual_attributes[indepVar]==2]+0.01))), 3)
         
         # Calculate log2 fold change (male - female)
         fold_change = round(male_median - female_median, 3)
@@ -126,8 +138,8 @@ def diff_exp(expFile,
 
         # Extract sex coefficient and p-value
         model_summary = model.summary2().tables[1]
-        pval = model_summary['P>|z|']['Sex']
-        coef = round(model_summary['Coef.']['Sex'], 3)
+        pval = model_summary['P>|z|'][indepVar]
+        coef = round(model_summary['Coef.'][indepVar], 3)
         
         p_values.append(pval)
         results.append([tissue, enhancer, male_median, female_median, fold_change, coef, format(pval, '.3e')])
@@ -147,8 +159,8 @@ def diff_exp(expFile,
         # Write header
         f.write('\t'.join(['Tissue',
                            'Enhancer',
-                           'Male_exp',
-                           'Female_exp',
+                           'Group1_exp',
+                           'Group2_exp',
                            'log2(FC)',
                            'coef',
                            'Pval',
@@ -170,7 +182,7 @@ def diff_exp(expFile,
                                    str(format(fdr, '.3e'))])+'\n')
                 significant_count += 1 
 
-    print(f"Analysis complete! Found {significant_count} sex-biased enhancers")                
+    print(f"Analysis complete! Found {significant_count} differentially expressed enhancers")                
 
 
 def usage():
@@ -181,17 +193,18 @@ def usage():
         --expFile        enhancer RPM matrix. 
         --sampleFile     sample_attribute_file of the tissue. The file can be downloaded from Recount3 platform.  
         --tissue         the tissue label.
+        --covarFile      the formula for GLM.
         --outFile        the file to write result.
         """)
     print()
-    print('Example: python diffExp.py  --expFile Spleen_RPM.csv --sampleFile Spleen_sample.csv --tissue Spleen --outFile sexBiasedEnhancer')
+    print('Example: python diffExp.py  --expFile Spleen_RPM.csv --sampleFile Spleen_sample.csv --tissue Spleen --covarFile formula.txt --outFile sexBiasedEnhancer')
     
 
 if __name__ == '__main__':
     # Parse command line arguments
     param = sys.argv[1:]
     try:
-        opts, args = getopt.getopt(param, '-h', ['expFile=', 'sampleFile=', 'tissue=', 'outFile='])
+        opts, args = getopt.getopt(param, '-h', ['expFile=', 'sampleFile=', 'tissue=', 'covarFile=', 'outFile='])
     except getopt.GetoptError:
         usage()
         sys.exit(2)
@@ -207,6 +220,8 @@ if __name__ == '__main__':
             sampleFile = str(arg)
         elif opt == '--tissue':
             tissue = str(arg)
+        elif opt == '--covarFile':
+            covarFile = str(arg)
         elif opt == '--outFile':
             outFile = str(arg)  
     
@@ -215,5 +230,5 @@ if __name__ == '__main__':
     diff_exp(expFile,
              sampleFile,
              tissue,
+             covarFile,
              outFile)
-    print("Analysis completed!")

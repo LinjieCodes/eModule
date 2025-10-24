@@ -110,7 +110,7 @@ def read_enhancerExp(enhancer_index,
         print(f"Processing tissue: {tissue}")
         for sampleFile in os.listdir(expFolder+tissue):
             # Extract sample ID from filename (GTEX-XXXXX-XXXXX-SM-XXXXX)
-            sampleID = sampleFile[sampleFile.find('GTEX-'):(sampleFile.find('.ALL.bw')-2)]
+            sampleID = sampleFile
             if sampleID in all_samples:
                 sample_counts[sampleID] = []
                 this_sample_counts = {}
@@ -167,35 +167,33 @@ def normalize_exp(enhancer_index,
     # Convert to R dataframe for TMM normalization
     counts_df_r = pandas2ri.py2rpy(counts_df)
 
-    # Apply TMM normalization using edgeR
+    # Apply TMM-CPM normalization using edgeR
     outFile = 'TMM_read_counts.csv'
     r.tmm_nor(counts_df_r, outFile)
-
-    outFile = 'TMM_read_counts.csv'
     
-    # Read TMM-normalized read counts
-    counts_tmm = pd.read_csv(outFile, index_col=0)
+    # Read normalized read counts
+    counts_cpm = pd.read_csv(outFile, index_col=0)
 
-    # Apply CPM normalization
-    constant = 1000000
-    counts_rpm = counts_tmm.apply(lambda x: round((x / x.sum()) * constant))
-    counts_rpm = counts_rpm.astype(int)
+    counts_cpm = counts_cpm.astype(int)
 
     # Export tissue-specific expression matrices
     for tissue in tissue_samples:
         samples = tissue_samples[tissue] 
-        counts_rpm_tissue = counts_rpm[samples]
+        valid_samples = counts_cpm.columns.intersection(samples)
+        counts_cpm_tissue = counts_cpm[valid_samples]
+        if counts_cpm_tissue.empty:
+            continue
         
         # Calculate median expression across samples
-        medians = counts_rpm_tissue.median(axis=1)
+        medians = counts_cpm_tissue.median(axis=1)
         
         # Filter out lowly expressed enhancers (median CPM < 1)
         columns_to_drop = medians[medians < 1].index
-        counts_rpm_tissue = counts_rpm_tissue.drop(index=columns_to_drop)
+        counts_cpm_tissue = counts_cpm_tissue.drop(index=columns_to_drop)
         
         # Write tissue-specific expression matrix
-        counts_rpm_tissue.to_csv(outFolder + '%s.csv' % tissue, index=True)
-        print(f"Processed {tissue}: {counts_rpm_tissue.shape[0]} enhancers retained")
+        counts_cpm_tissue.to_csv(outFolder + '%s.csv' % tissue, index=True)
+        print(f"Processed {tissue}: {counts_cpm_tissue.shape[0]} enhancers retained")
 
 
 def usage():
@@ -209,7 +207,7 @@ def usage():
         --outFolder      Output path to write enhancers' normalized expression.
         """)
     print()
-    print('Example: python eNormalization.py  --annoFile Ensembl_Fantom5_enhancers_nonOverlapGene --sampleFile sampleAttributes --expFolder eRNA_perbase_average/ --outFolder eRNA_RPM/')
+    print('Example: python eNormalization.py  --annoFile Ensembl_Fantom5_enhancers_nonOverlapGene --sampleFile sampleAttributes --expFolder eRNA_perbase_average/ --outFolder eRNA_CPM/')
 
     
 if __name__ == '__main__':

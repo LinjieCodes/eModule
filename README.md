@@ -42,8 +42,8 @@ eModule consists of three integrated modules that work together to provide compr
 
 **Algorithm**:
 - Uses generalized linear models (GLM) with Poisson family for count data
-- Controls for multiple confounding factors:
-  - Demographic variables (age, sex)
+- Controls for multiple confounding factors (should be specified in formula file):
+  - Demographic variables (age)
   - Technical covariates (RIN, PMI)
   - Population structure (genotype PCs)
   - Gene expression PCs (excluding sex-correlated PCs)
@@ -170,7 +170,7 @@ python eNormalization.py \
 **Parameters**:
 - `--annoFile`: Enhancer annotation file
 - `--sampleFile`: Sample attribute file
-- `--expFolder`: Path to folder containing tissue subfolders with expression files
+- `--expFolder`: Path to folder containing tissue subfolders with expression files. By default, files are named with sample ID. Files of the same tissue are placed in one subfolder.
 - `--outFolder`: Output directory for normalized matrices
 
 #### Step 3: Identify Differentially Expressed Enhancers
@@ -180,6 +180,7 @@ python diffExp.py \
     --expFile Spleen_CPM.csv \
     --sampleFile Spleen_sample.csv \
     --tissue Spleen \
+	--covarFile  formula.txt \
     --outFile sexBiasedEnhancer
 ```
 
@@ -187,6 +188,7 @@ python diffExp.py \
 - `--expFile`: Normalized expression matrix (CSV)
 - `--sampleFile`: Sample attributes with covariates
 - `--tissue`: Tissue name for output
+- `--covarFile`: Formula for GLM fitting
 - `--outFile`: Output file for results
 
 #### Step 4: Identify Regulatory Modules
