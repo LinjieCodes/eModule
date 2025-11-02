@@ -4,6 +4,10 @@
 
 eModule is a comprehensive computational framework designed to analyze enhancer expression and identify enhancer-mediated gene regulatory modules using transcriptomic data. This framework addresses the critical need for specialized tools that can effectively leverage RNA-seq data to understand enhancer biology and gene regulation.
 
+## Contents
+- [Scientific Background](#-Scientific-Background)
+---
+
 ## Scientific Background
 
 Enhancers are distal regulatory elements that play crucial roles in gene expression control through multiple mechanisms:
