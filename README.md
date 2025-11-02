@@ -342,7 +342,7 @@ eModule results can be validated through:
 
 If you use eModule in your research, please cite:
 
-Jie Lin et al. *xxx*, xxx, xxx.
+Jie Lin et al. *Sex-biased enhancers rewire transcriptional networks across human tissues*.
 
 ## Contributing
 
