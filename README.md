@@ -6,9 +6,22 @@ eModule is a comprehensive computational framework designed to analyze enhancer 
 
 ## Contents
 - [Scientific Background](#-Scientific-Background)
+- [Framework Architecture](#-Framework-Architecture)
+- [Installation](#-Installation)
+- [Usage](#-Usage)
+- [Output Formats](#-Output-Formats)
+- [Biological Interpretation](#-Biological-Interpretation)
+- [Example Applications](#-Example-Applications)
+- [Performance Considerations](#-Performance-Considerations)
+- [Troubleshooting](#-Troubleshooting)
+- [Citation](#-Citation)
+- [Contributing](#-Contributing)
+- [License](#-License)
+- [Contact](#-Contact)
+- [Acknowledgments](#-Acknowledgments)
 ---
 
-## Scientific Background
+## 🧬 Scientific Background
 
 Enhancers are distal regulatory elements that play crucial roles in gene expression control through multiple mechanisms:
 - **Direct transcriptional activation** via transcription factor (TF) binding
@@ -17,7 +30,7 @@ Enhancers are distal regulatory elements that play crucial roles in gene express
 
 eModule specifically focuses on **enhancer-mediated gene modules** - coordinated regulatory units where enhancers facilitate TF-gene interactions through chromatin looping rather than direct TF binding to gene promoters.
 
-## Framework Architecture
+## 🧬 Framework Architecture
 
 eModule consists of three integrated modules that work together to provide comprehensive enhancer analysis:
 
@@ -75,7 +88,7 @@ eModule consists of three integrated modules that work together to provide compr
 - Integrates multiple data types (expression, TFBS, gene annotations)
 <p align="center"><img src="https://github.com/LinjieCodes/eModule/blob/main/img/eModule_framework.png" alt="eModule" width="900px" /></p> 
 
-## Installation
+## 🧬 Installation
 
 ### Requirements
 
@@ -116,7 +129,7 @@ eModule consists of three integrated modules that work together to provide compr
    BiocManager::install("edgeR")
    ```
 
-## Usage
+## 🧬 Usage
 
 ### Data Preparation
 
@@ -224,7 +237,7 @@ python identifyModule.py \
 - `--rcutoff`: Correlation coefficient threshold (default: 0.3)
 - `--pcutoff`: P-value threshold (default: 0.05)
 
-## Output Formats
+## 🧬 Output Formats
 
 ### Expression Quantification Output
 ```
@@ -249,7 +262,7 @@ chr1:5000-6000	GATA3	GENE4, GENE5
 ...
 ```
 
-## Biological Interpretation
+## 🧬 Biological Interpretation
 
 ### Enhancer-Mediated vs. Co-responsive Models
 
@@ -271,7 +284,7 @@ eModule results can be validated through:
 3. **Functional enrichment** (GO terms, pathways)
 4. **Expression divergence** between conditions
 
-## Example Applications
+## 🧬 Example Applications
 
 ### Sex-Biased Enhancer Analysis
 - Identify enhancers with sex-specific activity
@@ -288,7 +301,7 @@ eModule results can be validated through:
 - Identify stage-specific regulatory modules
 - Understand enhancer roles in cell fate decisions
 
-## Performance Considerations
+## 🧬 Performance Considerations
 
 ### Computational Requirements
 - **Memory**: Proportional to number of enhancers × samples
@@ -301,7 +314,7 @@ eModule results can be validated through:
 3. **Parallel processing** automatically utilizes available CPU cores
 4. **Memory-efficient** data structures minimize RAM usage
 
-## Troubleshooting
+## 🧬 Troubleshooting
 
 ### Common Issues
 
@@ -342,13 +355,13 @@ eModule results can be validated through:
    head -n 5 Enhancer_TFBS.txt
    ```
 
-## Citation
+## 🧬 Citation
 
 If you use eModule in your research, please cite:
 
 Jie Lin et al. *Sex-biased enhancers rewire transcriptional networks across human tissues*.
 
-## Contributing
+## 🧬 Contributing
 
 We welcome contributions to eModule:
 - Reporting bugs
@@ -356,17 +369,17 @@ We welcome contributions to eModule:
 - Submitting pull requests
 - Improving documentation
 
-## License
+## 🧬 License
 
 This project is licensed under the Apache 2.0 License - see LICENSE file for details.
 
-## Contact
+## 🧬 Contact
 
 For questions, bug reports, or collaboration inquiries:
 - Email: JL.linjie@outlook.com
 - GitHub Issues: https://github.com/LinjieCodes/eModule/issues
 
-## Acknowledgments
+## 🧬 Acknowledgments
 
 - **GTEx Consortium** for providing transcriptomic data
 - **recount3 project** for processed bigWig files
