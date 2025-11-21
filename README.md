@@ -14,6 +14,7 @@ eModule is a comprehensive computational framework designed to analyze enhancer 
 - [Example Applications](#-Example-Applications)
 - [Performance Considerations](#-Performance-Considerations)
 - [Troubleshooting](#-Troubleshooting)
+- [Benchmarking](#-Benchmarking)
 - [Citation](#-Citation)
 - [Contributing](#-Contributing)
 - [License](#-License)
@@ -355,11 +356,15 @@ eModule results can be validated through:
    head -n 5 Enhancer_TFBS.txt
    ```
 
+## 🧬 Benchmarking
+
+This repository provides a systematic performance comparison of three computational methods—eModule, TargetFinder, and EPIPDLF—for enhancer-promoter interaction (EPI) prediction, evaluated across diverse human cell lines: https://github.com/LinjieCodes/epi-benchmarking
+
 ## 🧬 Citation
 
 If you use eModule in your research, please cite:
 
-Jie Lin et al. *Sex-biased enhancers rewire transcriptional networks across human tissues*.
+Lin et al. *Sex-biased enhancers rewire transcriptional networks across human tissues*.
 
 ## 🧬 Contributing
 
@@ -383,7 +388,7 @@ For questions, bug reports, or collaboration inquiries:
 
 - **GTEx Consortium** for providing transcriptomic data
 - **recount3 project** for processed bigWig files
-- **FANTOM and ENCODE** projects for enhancer annotations
+- **FANTOM, ENCODE and Ensembl** projects for enhancer annotations
 - **JASPAR** database for TF binding profiles
 - **edgeR developers** for robust normalization methods
 - **pyBigWig developers** for a python extension for quick access to bigBed files
