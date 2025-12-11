@@ -283,7 +283,7 @@ eModule results can be validated through:
 1. **Chromatin interaction data** (Hi-C, ChIA-PET)
 2. **eQTL analysis** (GTEx cis-eQTLs)
 3. **Functional enrichment** (GO terms, pathways)
-4. **Expression divergence** between conditions
+4. **Target gene expression divergence** between conditions
 
 ## 🧬 Example Applications
 
