@@ -2,7 +2,7 @@
 
 ## Overview
 
-eModule is a comprehensive computational framework designed to analyze enhancer expression and identify enhancer-mediated gene regulatory modules using transcriptomic data. This framework addresses the critical need for specialized tools that can effectively leverage RNA-seq data to understand enhancer biology and gene regulation.
+eModule is a comprehensive computational framework designed to analyze enhancer transcription and identify enhancer-mediated TF-target gene modules using transcriptomic data. This framework addresses the critical need for specialized tools that can effectively leverage RNA-seq data to understand enhancer biology and gene regulation.
 
 ## Contents
 - [Scientific Background](#-Scientific-Background)
@@ -29,14 +29,14 @@ Enhancers are distal regulatory elements that play crucial roles in gene express
 - **Chromatin looping** to bring TFs into proximity with target gene promoters
 - **Production of enhancer RNAs (eRNAs)** that reflect enhancer activity
 
-eModule specifically focuses on **enhancer-mediated gene modules** - coordinated regulatory units where enhancers facilitate TF-gene interactions through chromatin looping rather than direct TF binding to gene promoters.
+eModule specifically focuses on **enhancer-mediated TF-target gene modules** - coordinated regulatory units where enhancers facilitate TF-gene interactions through chromatin looping rather than direct TF binding to gene promoters.
 
 ## 🧬 Framework Architecture
 
 eModule consists of three integrated modules that work together to provide comprehensive enhancer analysis:
 
-### 1. Expression Quantification and  Normalization (`calculateExp.py` and `eNormalization.py`)
-**Purpose**: Quantifies enhancer expression from RNA-seq bigWig files, and normalizes for cross-sample comparability
+### 1. Transcription Quantification and  Normalization (`calculateExp.py` and `eNormalization.py`)
+**Purpose**: Quantifies enhancer transcription from RNA-seq bigWig files, and normalizes for cross-sample comparability
 
 **Algorithm**:
 - Extracts per-base read coverage across enhancer regions using pyBigWig
@@ -74,7 +74,7 @@ eModule consists of three integrated modules that work together to provide compr
 - Prevents over-correction by excluding sex-correlated expression PCs
 
 ### 3. Regulatory Module Identification (`identifyModule.py`)
-**Purpose**: Identifies enhancer-mediated gene regulatory modules
+**Purpose**: Identifies enhancer-mediated TF-target gene modules
 
 **Algorithm**:
 1. **Co-expression Analysis**: Identifies TF-enhancer-gene triplets with significant Spearman correlations
@@ -86,7 +86,7 @@ eModule consists of three integrated modules that work together to provide compr
 - Distinguishes enhancer-mediated regulation from co-responsive models
 - Implements non-parametric bootstrap mediation analysis
 - Uses parallel processing for computational efficiency
-- Integrates multiple data types (expression, TFBS, gene annotations)
+- Integrates multiple data types (enhancer transcription, mRNA expresssion, TFBS)
 <p align="center"><img src="https://github.com/LinjieCodes/eModule/blob/main/img/eModule_framework.png" alt="eModule" width="900px" /></p> 
 
 ## 🧬 Installation
