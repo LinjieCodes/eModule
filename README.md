@@ -364,7 +364,7 @@ This repository provides a systematic performance comparison of three computatio
 
 If you use eModule in your research, please cite:
 
-Lin et al. *Sex-biased enhancers rewire transcriptional networks across human tissues*.
+Lin et al. *Sex-biased enhancers shape transcriptional sex differences across human tissues*.
 
 ## 🧬 Contributing
 
